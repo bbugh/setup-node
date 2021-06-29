@@ -45,6 +45,8 @@ export async function run() {
       auth.configAuthentication(registryUrl, alwaysAuth);
     }
 
+    process.chdir(core.getInput('working-directory') ?? '.');
+
     const matchersPath = path.join(__dirname, '..', '.github');
     core.info(`##[add-matcher]${path.join(matchersPath, 'tsc.json')}`);
     core.info(
