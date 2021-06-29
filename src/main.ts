@@ -7,6 +7,10 @@ import os = require('os');
 
 export async function run() {
   try {
+    const workingDir = core.getInput('working-directory') ?? '.'
+    process.chdir(workingDir);
+    core.warning(`working dir: ${workingDir}`)
+
     //
     // Version is optional.  If supplied, install / use from the tool cache
     // If not supplied then task is still used to setup proxy, auth, etc...
@@ -45,7 +49,6 @@ export async function run() {
       auth.configAuthentication(registryUrl, alwaysAuth);
     }
 
-    process.chdir(core.getInput('working-directory') ?? '.');
 
     const matchersPath = path.join(__dirname, '..', '.github');
     core.info(`##[add-matcher]${path.join(matchersPath, 'tsc.json')}`);
